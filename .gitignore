@@ -1,0 +1,14 @@
+# Ignore build artifacts
+/build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+*.o
+*.out
+*.exe
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.swp
