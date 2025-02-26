@@ -36,7 +36,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: 'DockerHubCred']) {
+                withDockerRegistry([credentialsId: 'DockerHubCred', url: 'https://index.docker.io/v1/']) {
                     sh 'docker tag scientific-calculator devenkapadia/scientific-calculator:latest'
                     sh 'docker push devenkapadia/scientific-calculator:latest'
                 }
