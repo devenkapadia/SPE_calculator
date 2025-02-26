@@ -44,13 +44,15 @@ pipeline {
             }
         }
 
-        stage('Run Ansible Playbook for Deployment') {
+        stage('Run Ansible Playbook') { 
             steps {
                 script {
-                    ansiblePlaybook(
-                        playbook: 'deploy.yml',
-                        inventory: 'inventory'
-                    )
+                    withEnv(["ANSIBLE_HOST_KEY_CHECKING=False"]) {   
+                        ansiblePlaybook(
+                            playbook: 'deploy.yml',
+                            inventory: 'inventory'
+                        )
+                    }
                 }
             }
         }
