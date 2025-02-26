@@ -1,0 +1,28 @@
+---
+- name: Deploy Scientific Calculator
+  hosts: localhost
+  remote_user: deven
+  become: false
+
+  tasks:
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+
+    - name: Pull Docker Image
+      docker_image:
+        name: "devenkapadia/scientific-calculator"
+        source: pull
+      register: docker_pull_result
+
+    - name: Display Docker Pull Result
+      debug:
+        var: docker_pull_result
+
+    - name: Remove existing calculator container (if exists)
+      command: docker rm -f calculator
+      ignore_errors: yes
+
+    - name: Running container
+      shell: docker run -it -d --name calculator devenkapadia/scientific-calculator
