@@ -38,7 +38,6 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'DockerHubCred') {
-                        sh 'docker tag scientific-calculator devenkapadia/scientific-calculator:latest'
                         sh 'docker push devenkapadia/scientific-calculator:latest'
                     }
                 }
