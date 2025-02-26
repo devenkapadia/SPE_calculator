@@ -34,11 +34,13 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Docker Images') {
             steps {
-                withDockerRegistry([credentialsId: 'DockerHubCred', url: 'https://index.docker.io/v1/']) {
-                    sh 'docker tag scientific-calculator devenkapadia/scientific-calculator:latest'
-                    sh 'docker push devenkapadia/scientific-calculator:latest'
+                script {
+                    docker.withRegistry('', 'DockerHubCred') {
+                        sh 'docker tag scientific-calculator devenkapadia/scientific-calculator:latest'
+                        sh 'docker push devenkapadia/scientific-calculator:latest'
+                    }
                 }
             }
         }
