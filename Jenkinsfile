@@ -21,7 +21,7 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 script {
-                    sh 'mvn clean package'  // Build the Spring Boot app
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -29,18 +29,16 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                    sh 'docker build -t scientific-calculator .'
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('', 'DockerHubCred') {
-                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
-                        sh "docker push ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
-                    }
+                withDockerRegistry([credentialsId: 'DockerHubCred']) {
+                    sh 'docker tag scientific-calculator devenkapadia/scientific-calculator:latest'
+                    sh 'docker push devenkapadia/scientific-calculator:latest'
                 }
             }
         }
