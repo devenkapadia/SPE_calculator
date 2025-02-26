@@ -25,4 +25,4 @@
       ignore_errors: yes
 
     - name: Running container
-      shell: docker run -it -d --name calculator devenkapadia/scientific-calculator
+      shell: docker run -it -d -p 9090:9090 --name calculator devenkapadia/scientific-calculator
