@@ -29,7 +29,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t scientific-calculator .'
+                    sh 'docker build -t devenkapadia/scientific-calculator .'
                 }
             }
         }
