@@ -1,5 +1,5 @@
 # Use OpenJDK as base image
-FROM openjdk:17-jdk-slim
+FROM openjdk:17
 
 # Set working directory
 WORKDIR /app
@@ -11,4 +11,4 @@ COPY target/calculator-0.0.1-SNAPSHOT.jar /app/calculator.jar
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "/app/scientific-calculator.jar"]
+CMD ["java", "-jar", "/app/calculator.jar"]
