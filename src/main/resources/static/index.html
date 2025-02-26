@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scientific Calculator</title>
+    <script>
+        async function calculate(operation) {
+            let x = document.getElementById("x").value;
+            let y = document.getElementById("y").value;
+            let url = `/api/${operation}/${x}`;
+            if (operation === "power") {
+                url += `/${y}`;
+            }
+            let response = await fetch(url);
+            let result = await response.text();
+            document.getElementById("result").innerText = "Result: " + result;
+        }
+    </script>
+</head>
+<body>
+<h2>Scientific Calculator</h2>
+<input type="number" id="x" placeholder="Enter number x">
+<input type="number" id="y" placeholder="Enter number y (for power)">
+<button onclick="calculate('sqrt')">√x</button>
+<button onclick="calculate('factorial')">x!</button>
+<button onclick="calculate('ln')">ln(x)</button>
+<button onclick="calculate('power')">x^y</button>
+<p id="result">Result:</p>
+</body>
+</html>
