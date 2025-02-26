@@ -2,14 +2,56 @@
 <html lang="en">
 <head>
     <title>Scientific Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+        }
+    </style>
     <script>
-        async function calculate(operation) {
+        async function calculate() {
             let x = document.getElementById("x").value;
             let y = document.getElementById("y").value;
+            let operation = document.getElementById("operation").value;
+
             let url = `/api/${operation}/${x}`;
             if (operation === "power") {
                 url += `/${y}`;
             }
+
             let response = await fetch(url);
             let result = await response.text();
             document.getElementById("result").innerText = "Result: " + result;
@@ -18,12 +60,19 @@
 </head>
 <body>
 <h2>Scientific Calculator</h2>
-<input type="number" id="x" placeholder="Enter number x">
-<input type="number" id="y" placeholder="Enter number y (for power)">
-<button onclick="calculate('sqrt')">√x</button>
-<button onclick="calculate('factorial')">x!</button>
-<button onclick="calculate('ln')">ln(x)</button>
-<button onclick="calculate('power')">x^y</button>
-<p id="result">Result:</p>
+<div class="calculator">
+    <input type="number" id="x" placeholder="Enter number x">
+    <input type="number" id="y" placeholder="Enter number y (for power)">
+
+    <select id="operation">
+        <option value="sqrt">√x (Square Root)</option>
+        <option value="factorial">x! (Factorial)</option>
+        <option value="ln">ln(x) (Natural Log)</option>
+        <option value="power">x^y (Power)</option>
+    </select>
+
+    <button onclick="calculate()">Calculate</button>
+    <p id="result">Result:</p>
+</div>
 </body>
 </html>
