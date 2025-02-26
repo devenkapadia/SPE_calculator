@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage('Test with Maven') {
+            steps {
+                script {
+                    sh 'mvn test -Dtest=CalculatorApplicationTests'
+                }
+            }
+        }
+
         stage('Build with Maven') {
             steps {
                 script {
