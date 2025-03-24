@@ -40,20 +40,37 @@
             color: #333;
             margin-top: 15px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
     <script>
+        // Function to toggle the visibility of y input box
+        function toggleYInput() {
+            const operation = document.getElementById("operation").value;
+            const yInput = document.getElementById("y-container");
+
+            if (operation === "power") {
+                yInput.classList.remove("hidden");
+            } else {
+                yInput.classList.add("hidden");
+            }
+        }
+
+        // Function to perform calculation
         async function calculate() {
-            let x = document.getElementById("x").value;
-            let y = document.getElementById("y").value;
-            let operation = document.getElementById("operation").value;
+            const x = document.getElementById("x").value;
+            const operation = document.getElementById("operation").value;
 
             let url = `/api/${operation}/${x}`;
+
             if (operation === "power") {
+                const y = document.getElementById("y").value;
                 url += `/${y}`;
             }
 
-            let response = await fetch(url);
-            let result = await response.text();
+            const response = await fetch(url);
+            const result = await response.text();
             document.getElementById("result").innerText = "Result: " + result;
         }
     </script>
@@ -62,9 +79,12 @@
 <h2>Scientific Calculator</h2>
 <div class="calculator">
     <input type="number" id="x" placeholder="Enter number x">
-    <input type="number" id="y" placeholder="Enter number y (for power)">
 
-    <select id="operation">
+    <div id="y-container" class="hidden">
+        <input type="number" id="y" placeholder="Enter number y (for power)">
+    </div>
+
+    <select id="operation" onchange="toggleYInput()">
         <option value="sqrt">√x (Square Root)</option>
         <option value="factorial">x! (Factorial)</option>
         <option value="ln">ln(x) (Natural Log)</option>
